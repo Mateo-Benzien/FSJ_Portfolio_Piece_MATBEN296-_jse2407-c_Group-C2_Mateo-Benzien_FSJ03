@@ -1,4 +1,4 @@
-// scr/lib/auth.js
+// src/lib/auth.js
 import { auth } from './firebaseConfig';
 import {
   createUserWithEmailAndPassword,

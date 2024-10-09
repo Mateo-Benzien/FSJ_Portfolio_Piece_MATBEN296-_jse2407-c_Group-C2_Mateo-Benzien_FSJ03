@@ -1,4 +1,4 @@
-// scr/context/AuthContext.js
+// src/context/AuthContext.js
 import React, { createContext, useEffect, useState } from 'react';
 import { onAuthStateChangedListener } from '../lib/auth';
 

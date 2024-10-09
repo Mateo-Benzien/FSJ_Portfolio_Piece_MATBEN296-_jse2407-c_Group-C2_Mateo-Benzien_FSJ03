@@ -1,4 +1,4 @@
-// scr/components/SignInForm.jsx
+// src/components/SignInForm.jsx
 import { useState, useContext } from 'react';
 import { signIn } from '../lib/auth';
 import { AuthContext } from '../context/AuthContext';
