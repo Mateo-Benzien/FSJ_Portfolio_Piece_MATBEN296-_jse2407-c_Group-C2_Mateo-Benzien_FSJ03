@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { fetchProductById } from '../../api/api';
 import ReviewList from '../../components/ReviewList';
+import ReviewForm from '../../components/ReviewForm';
+import { AuthContext } from '../../context/AuthContext';
 
 export default function ProductDetail({ initialProduct }) {
   const router = useRouter();
@@ -12,8 +14,8 @@ export default function ProductDetail({ initialProduct }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [sortOption, setSortOption] = useState('latest');
+  const { user } = useContext(AuthContext); // Access user from context
 
-  // Fetch product details if not provided during SSR
   useEffect(() => {
     const loadProduct = async () => {
       if (!id) return;
@@ -54,6 +56,10 @@ export default function ProductDetail({ initialProduct }) {
     setSortOption(event.target.value);
   };
 
+  const handleReviewAdded = (newReview) => {
+    setReviews((prev) => [...prev, newReview]); // Add new review to state
+  };
+
   return (
     <div className="product-detail-container">
       {error && <div className="error-message">{error}</div>}
@@ -73,6 +79,7 @@ export default function ProductDetail({ initialProduct }) {
 
             <div className="reviews">
               <h2>Reviews</h2>
+              {user && <ReviewForm productId={id} onReviewAdded={handleReviewAdded} />}
               <select value={sortOption} onChange={handleSortChange} className="sort-select">
                 <option value="latest">Sort by Latest</option>
                 <option value="oldest">Sort by Oldest</option>
